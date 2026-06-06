@@ -15,14 +15,33 @@ cd host-dashboard
 
 echo -e "\e[32m[3/5] Environmental Configuration\e[0m"
 read -p "Enter your MongoDB URL: " MONGO_URL
-read -p "Enter your Pterodactyl Panel URL (e.g. https://panel.yoursite.com): " PTERO_URL
+read -p "Enter your Discord Client ID: " DISCORD_ID
+read -p "Enter your Discord Client Secret: " DISCORD_SECRET
+read -p "Enter your Discord Guild ID: " GUILD_ID
+read -p "Enter your Discord Bot Token: " BOT_TOKEN
+read -p "Enter your NextAuth URL (e.g., https://dashboard.codespaceide.online): " AUTH_URL
+read -p "Enter your Pterodactyl Panel URL: " PTERO_URL
 read -p "Enter your Pterodactyl API Key: " PTERO_KEY
+
+# Auto-generate a secure random secret for NextAuth so the user doesn't have to guess one
 AUTH_SECRET=$(openssl rand -base64 32)
 
-echo "DATABASE_URL=\"$MONGO_URL\"" > .env
-echo "NEXTAUTH_SECRET=\"$AUTH_SECRET\"" >> .env
-echo "PTERODACTYL_URL=\"$PTERO_URL\"" >> .env
-echo "PTERODACTYL_API_KEY=\"$PTERO_KEY\"" >> .env
+# Write the .env file with exact spacing and formatting
+cat <<EOF > .env
+DATABASE_URL="$MONGO_URL"
+
+DISCORD_CLIENT_ID="$DISCORD_ID"
+DISCORD_CLIENT_SECRET="$DISCORD_SECRET"
+
+DISCORD_GUILD_ID="$GUILD_ID"
+DISCORD_BOT_TOKEN="$BOT_TOKEN"
+
+NEXTAUTH_SECRET="$AUTH_SECRET"
+NEXTAUTH_URL="$AUTH_URL"
+
+PTERODACTYL_URL="$PTERO_URL"
+PTERODACTYL_API_KEY="$PTERO_KEY"
+EOF
 
 echo -e "\e[32m[4/5] Compiling Dashboard & Database Engine...\e[0m"
 npm install
@@ -40,5 +59,5 @@ pm2 startup
 
 echo -e "\e[34m=========================================\e[0m"
 echo -e "\e[32m✅ INSTALLATION COMPLETE!\e[0m"
-echo -e "\e[36mAccess your dashboard at http://YOUR_SERVER_IP:3000\e[0m"
+echo -e "\e[36mAccess your dashboard at \$AUTH_URL\e[0m"
 echo -e "\e[34m=========================================\e[0m"
