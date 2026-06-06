@@ -10,8 +10,9 @@ Run this command in your terminal:
 
 ```bash
 bash <(curl -s [https://raw.githubusercontent.com/StringWire/Dashboard/main/install.sh](https://raw.githubusercontent.com/StringWire/Dashboard/main/install.sh))
-The installer will automatically:
 ```
+The installer will automatically:
+
 Install Node.js 20, Git, and PM2.
 
 Prompt you for your MongoDB URL and Pterodactyl API Keys.
