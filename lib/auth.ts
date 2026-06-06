@@ -18,6 +18,24 @@ export const authOptions: NextAuthOptions = {
     maxAge: 6 * 60 * 60, // 6 hours
   },
   callbacks: {
+    // --- MASTER ADMIN AUTO-PROMOTION ---
+    async signIn({ user, account, profile }) {
+      if (profile && profile.id === process.env.ADMIN_DISCORD_ID) {
+        try {
+          // Instantly upgrade them to Admin in the database
+          await prisma.user.update({
+            where: { email: user.email! },
+            data: { role: 'ADMIN' } 
+          });
+          console.log(`👑 Master Admin ${user.name} has entered the dashboard!`);
+        } catch (error) {
+          console.error("Failed to promote admin:", error);
+        }
+      }
+      return true; // Let them finish logging in
+    },
+    // -----------------------------------
+    
     async session({ session, user }: any) {
       if (session.user) {
         session.user.id = user.id;
@@ -25,7 +43,7 @@ export const authOptions: NextAuthOptions = {
         session.user.coins = user.coins;
       }
       return session;
-    },
+    }
   },
   secret: process.env.NEXTAUTH_SECRET,
 };
