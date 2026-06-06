@@ -7,7 +7,11 @@ A professional, fully automated hosting dashboard built with Next.js and integra
 The easiest way to deploy the entire Codespace Dashboard, including the automated background billing engine, is to run our one-click auto-installer on a fresh Ubuntu VPS.
 
 Run this command in your terminal:
+```
+apt update
 
+apt upgrade -y
+```
 ```bash
 bash <(curl -s [https://raw.githubusercontent.com/StringWire/Dashboard/main/install.sh](https://raw.githubusercontent.com/StringWire/Dashboard/main/install.sh))
 ```
