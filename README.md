@@ -13,7 +13,7 @@ apt update
 apt upgrade -y
 ```
 ```bash
-bash <(curl -s [https://raw.githubusercontent.com/StringWire/Dashboard/main/install.sh](https://raw.githubusercontent.com/StringWire/Dashboard/main/install.sh))
+bash <(curl -s https://raw.githubusercontent.com/StringWire/Dashboard/main/install.sh)
 ```
 The installer will automatically:
 
