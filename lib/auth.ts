@@ -20,7 +20,7 @@ export const authOptions: NextAuthOptions = {
   callbacks: {
     // --- MASTER ADMIN AUTO-PROMOTION ---
     async signIn({ user, account, profile }) {
-      if (profile && profile.id === process.env.ADMIN_DISCORD_ID) {
+      if (profile && account.providerAccountId === process.env.ADMIN_DISCORD_ID) {
         try {
           // Instantly upgrade them to Admin in the database
           await prisma.user.update({
